@@ -24,7 +24,7 @@ void matrix_print(int *t, int tailleFinale)
 {
     for (int j = 0; j < tailleFinale; j++)
     {
-        printf("%ld ", t[j]);
+        printf("%d ", t[j]);
     }
 }
 
@@ -36,7 +36,7 @@ int main(void)
     int tailleTabFinal = 0;
     for (int i = 0; i < taille; i++)
     {
-        tailleTabFinal += t2[i];
+        tailleTabFinal += t1[i];
     }
     int *tResultat;
     int *p1;
