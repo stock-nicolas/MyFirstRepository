@@ -24,7 +24,7 @@ void matrix_print(int *t, int tailleFinale)
 {
     for (int j = 0; j < tailleFinale; j++)
     {
-        printf("%d ", t[j]);
+        printf(" %d ", t[j]);
     }
 }
 
