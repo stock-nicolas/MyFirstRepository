@@ -108,6 +108,12 @@ void completerUnWinner(FILE *f, PrixTuring *toutLesPrix, char buffer[2048], int 
 	toutLesPrix[i].titre = destTopic;
 }
 
+void concatenneInfoWinner(char buffer[2048], PrixTuring *toutLesPrix, FILE *out, int i)
+{
+	sprintf(buffer, "%d;%s;%s\n", toutLesPrix[i].annee, toutLesPrix[i].prenomNom, toutLesPrix[i].titre);
+	fputs(buffer, out);
+}
+
 void readWinners(FILE *f, PrixTuring *toutLesPrix, int taille)
 {
 
@@ -115,6 +121,15 @@ void readWinners(FILE *f, PrixTuring *toutLesPrix, int taille)
 	for (int i = 0; i < taille; i++)
 	{
 		completerUnWinner(f, toutLesPrix, buffer, i);
+	}
+}
+
+void printWinners(PrixTuring *toutLesPrix, FILE *output, int taille)
+{
+	char buffer[2048];
+	for (int i = 0; i < taille; i++)
+	{
+		concatenneInfoWinner(buffer, toutLesPrix, output, i);
 	}
 }
 
@@ -144,8 +159,10 @@ int main(int argc, char **argv)
 
 	readWinners(f, toutLesPrixTuring, taille);
 
-	printf("la premiere année ou l'on a gagner un prix est :%d\n", toutLesPrixTuring[0].annee);
-	printf("le premier gagnant est :%s\n", toutLesPrixTuring[0].prenomNom);
+	printf("la premiere année ou l'on a gagner un prix est :%d\n", toutLesPrixTuring[56].annee);
+	printf("le premier gagnant est :%s\n", toutLesPrixTuring[56].prenomNom);
+
+	printWinners(toutLesPrixTuring, output, taille);
 
 	//--------desalocation des variables--------
 	fclose(f);
