@@ -133,6 +133,26 @@ void printWinners(PrixTuring *toutLesPrix, FILE *output, int taille)
 	}
 }
 
+void freeMemory(PrixTuring *toutLesPrix, int tailleToutLesPrix)
+{
+	for (int i = 0; i < tailleToutLesPrix; i++)
+	{
+		free(toutLesPrix[i].prenomNom);
+		free(toutLesPrix[i].titre);
+	}
+}
+
+void infoAnnee(int annee, PrixTuring *tab, int taille)
+{
+	for (int i = 0; i < taille; i++)
+	{
+		if ((tab[i]).annee = annee)
+		{
+			printf("l'annee %d, le(s) gagnants(s) ont été : %s\nNature des travaux : %s\n", annee, tab[i].prenomNom, tab[i].titre);
+		}
+	}
+}
+
 int main(int argc, char **argv)
 {
 
@@ -140,11 +160,41 @@ int main(int argc, char **argv)
 
 	char filename[] = "turingWinners.csv";
 	char outputFilename[] = "out.csv";
+	int veutOnLesInfosDunGagant = 0;
+	int anneeVoulu;
 
 	FILE *f;
 	FILE *output;
+	//----------gestion des paramètres d'appel-----------
+
+	for (int i = 1; i < argc; i++)
+	{
+		if (strcmp(argv[i], "-o") == 0)
+		{
+			if (i + 1 < argc)
+			{
+				output = fopen(argv[i + 1], "w");
+				i++;
+			}
+		}
+		if (strcmp(argv[i], "--info"))
+		{
+			if (i + 1 < argc)
+			{
+				anneeVoulu = atoi(argv[i + 1]);
+				printf("annee voulue en string : %s\n", argv[i + 1]);
+				printf("annee voulue en decimal : %d\n", anneeVoulu);
+				veutOnLesInfosDunGagant = 1;
+				i++;
+			}
+		}
+		else
+		{
+			output = fopen(outputFilename, "w");
+		}
+	}
+
 	f = fopen(filename, "r");
-	output = fopen(outputFilename, "w");
 
 	// --------fonction utilisée ------------
 
@@ -162,9 +212,15 @@ int main(int argc, char **argv)
 	printf("la premiere année ou l'on a gagner un prix est :%d\n", toutLesPrixTuring[56].annee);
 	printf("le premier gagnant est :%s\n", toutLesPrixTuring[56].prenomNom);
 
+	if (veutOnLesInfosDunGagant == 1)
+	{
+		infoAnnee(anneeVoulu, toutLesPrixTuring, taille);
+	}
+
 	printWinners(toutLesPrixTuring, output, taille);
 
 	//--------desalocation des variables--------
+	freeMemory(toutLesPrixTuring, taille);
 	fclose(f);
 	fclose(output);
 
