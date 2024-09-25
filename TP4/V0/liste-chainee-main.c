@@ -23,8 +23,13 @@ int main(void){
 
 	afficheListe_i(l);
 
+	// ajoutFin_i(99,l);
 	ajoutFin_r(99,l);
 	afficheListe_i(l);
+
+	detruire_r(l);
+	
+	return 0;
 
 	ajoutFin_r(100,l);
 	afficheListe_i(l);
