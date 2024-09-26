@@ -144,7 +144,7 @@ Liste retirePremier_i(Element v, Liste l) {
 	}
 	// only one element
 	if(l->val==v){
-
+		p=l->suiv;
 		detruireElement(l->val);
 		free(l);
 		return tempList;
