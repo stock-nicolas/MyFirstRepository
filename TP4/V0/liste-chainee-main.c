@@ -27,12 +27,11 @@ int main(void){
 	ajoutFin_r(99,l);
 	afficheListe_i(l);
 
-	detruire_r(l);
-	
-	return 0;
 
 	ajoutFin_r(100,l);
 	afficheListe_i(l);
+
+	
 
 	p = cherche_i(200,l);
 	printf("cherche_i(200) : %s\n",estVide(p)?"pas trouve":"[ERREUR] trouve !!!");
@@ -69,6 +68,9 @@ int main(void){
 	printf("retirePremier_i(100) : ");
 	l = retirePremier_i(100,l);
 	afficheListe_r(l);
+	
+	// detruire_r(l);
+	// return 0;
 
 	printf("retirePremier_r(4)   : ");
 	l = retirePremier_r(4,l);
@@ -81,6 +83,9 @@ int main(void){
 	printf("retirePremier_r(99)  : ");
 	l = retirePremier_r(99,l);
 	afficheListe_r(l);
+
+	printf("afficheEnvers_r(l)   : ");
+	afficheEnversComplet_r(l);
 
 	detruire_r(l);
 

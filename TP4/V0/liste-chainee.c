@@ -138,13 +138,12 @@ Liste cherche_r(Element v,Liste l) {
 // ne fait rien si aucun élément possède cette valeur
 // version itérative
 Liste retirePremier_i(Element v, Liste l) {
-	Liste tempList=l;
 	if(l==NULL){
 		return NULL;
 	}
-	// only one element
-	if(l->val==v){
-		p=l->suiv;
+	//only one element
+	if(equalsElement(l->val,v)){
+		Liste tempList=l->suiv;
 		detruireElement(l->val);
 		free(l);
 		return tempList;
@@ -160,8 +159,11 @@ Liste retirePremier_i(Element v, Liste l) {
 	if(!estVide(p)){
 		precedent->suiv=p->suiv;
 		p->suiv=NULL;
-		detruire_i(p);
+		detruireElement(p->val);
+		free(p);
 	}
+
+	return l;
 
 }
 
@@ -183,7 +185,18 @@ Liste retirePremier_r(Element v, Liste l) {
 
 
 void afficheEnvers_r(Liste l) {
-	TODO;
+	if(l==NULL){
+		return;
+	}
+	else{
+		afficheEnvers_r(l->suiv);
+		afficheElement(l->val);
+	}	
+}
+
+void afficheEnversComplet_r(Liste l){
+	afficheEnvers_r(l);
+	printf("\n");
 }
 
 
