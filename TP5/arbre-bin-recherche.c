@@ -37,7 +37,7 @@ ArbreBinaire insere_i(ArbreBinaire a, Element e) {
 			p=p->filsDroit;
 	}
 
-	if(estVide(a)){
+	if(estVide(p)){
 		if(estVide(pere_p)){
 			a = creer(e);
 		}
@@ -61,7 +61,7 @@ ArbreBinaire insere_r(ArbreBinaire a, Element e) {
 	}
 	else{
 		if(a->val>e)
-			a->filsGauche=inser_r(a->filsGauche,e);
+			a->filsGauche=insere_r(a->filsGauche,e);
 		else if(a->val<e){
 			a->filsDroit=insere_r(a->filsDroit,e);
 		}

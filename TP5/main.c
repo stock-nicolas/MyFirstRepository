@@ -14,7 +14,7 @@ int main(void){
 
 	a=creer(4);
 	insere_i(a,9);
-	printf("a = v1: %d\n",a->val);
+	printf("a = v1: %d  v2 %d\n",a->val,a->filsDroit->val);
 
 //	printf("a = v1: %d ; v2: %d\n",a->val,a->filsDroit->val);
 	// free(a->filsDroit);
