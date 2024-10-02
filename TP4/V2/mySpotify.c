@@ -6,17 +6,30 @@
 #include <stdio.h>
 #include <errno.h>
 #include <assert.h>
+#include <string.h>
 
 
 //------def fonction externe------
 
-
+typedef struct {
+    char* name;
+    char* artist;
+    char* album;
+    char* genre;
+    int discNumber;
+    int trackNumber;
+    int year;
+} Music ;
 
 void afficheElement(Element e){
-    printf("%s ",e);
+    printf("%s;%s;%s;%s;%d;%d;%d\n",((Music*)e)->name,((Music*)e)->artist,((Music*)e)->album,((Music*)e)->genre,((Music*)e)->discNumber,((Music*)e)->trackNumber,((Music*)e)->year);
 }
 
 void detruireElement(Element e){
+    free(((Music*)e)->name);
+    free(((Music*)e)->artist);
+    free(((Music*)e)->album);
+    free(((Music*)e)->genre);
     free(e);
 }
 
@@ -44,26 +57,26 @@ int numberOfWinners(FILE *fInput)
 	return nombreDeLigne;
 }
 
-Music* readOneMusic(FILE* f,char*buffer[2048],int i){
+Music* readOneMusic(FILE* f,char buffer[2048],int i){
     fgets(buffer,2047,f);
     Music* musique = malloc(sizeof(Music));
     // alloc name
     char* token = strtok(buffer,";");
     musique->name =malloc(sizeof(char)*(strlen(token)+1));
-    strncpy(musique->name,token);
+    strcpy(musique->name,token);
 
     //alloc artist
     token = strtok(NULL,";");
     musique->artist = malloc(sizeof(char)*(strlen(token)+1));
-    strncpy(musique->artist,token);
+    strcpy(musique->artist,token);
     // alloc album
     token = strtok(NULL,";");
     musique->album = malloc(sizeof(char)*(strlen(token)+1));
-    strncpy(musique->album,token);
+    strcpy(musique->album,token);
     //alloc genre
     token=strtok(NULL,";");
     musique->genre=malloc(sizeof(char)*(strlen(token)+1));
-    strncpy(musique->genre,token);
+    strcpy(musique->genre,token);
     //nbDisque
     token=strtok(NULL,";");
     musique->discNumber=atoi(token);
@@ -80,7 +93,7 @@ Music* readOneMusic(FILE* f,char*buffer[2048],int i){
 }
 
 Liste readMusics(FILE* f,int taille){
-    char* buffer[2048];
+    char buffer[2048];
     Liste spotify=NULL;
     for(int i=0;i<taille;i++){
         spotify=ajoutFin_i(readOneMusic(f,buffer,i),spotify);
@@ -88,15 +101,7 @@ Liste readMusics(FILE* f,int taille){
     return spotify;
 }
 
-typedef struct {
-    char* name;
-    char* artist;
-    char* album;
-    char* genre;
-    int discNumber;
-    int trackNumber;
-    int year;
-} Music ;
+
 
 
 int main(void){
@@ -105,16 +110,21 @@ int main(void){
     char* filename = "music.csv";
     char* outputname = "out.csv";
 
-    FILE* readFile = fopen(filename,'r');
-    FILE* outFile = fopen(outputname,'w');
+    FILE* readFile = fopen(filename,"r");
 
-    
+    printf("on a passé le fopen");
     int taille = numberOfWinners(readFile);
     rewind(readFile);
 
+    printf("on a passé le rewind");
+
     Liste spotify = readMusics(readFile,taille);
 
+    printf("on a passé le readMusic");
 
+    afficheListe_i(spotify);
 
+    fclose(readFile);
+    detruire_i(spotify);
     return 0;
 }
